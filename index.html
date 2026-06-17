@@ -53,8 +53,7 @@
     <img id="bg1" class="bg-img" src="https://nonesmarielle-cmd.github.io/theshit/Artboard%201.png" alt="poop"/>
     <div class="vignette"></div>
     <div class="panel" id="p1a"><img class="headline-img" src="https://nonesmarielle-cmd.github.io/theshit/thisisthe.png" alt="THIS IS THE SHIT"/></div>
-    <div class="panel" id="p1b" style="opacity:0;"><img class="headline-img" src="https://nonesmarielle-cmd.github.io/theshit/Group%205.png" alt="#01"/></div>
-  </div>
+    </div>
 
   <!-- PANEL 2 -->
   <div class="h-panel scrollable" id="panel-know">
@@ -84,7 +83,8 @@
       <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding:14% 5% 0;">
         <img src="https://nonesmarielle-cmd.github.io/theshit/3dthursday.png" style="width:88%;display:block;margin-bottom:5%;"/>
         <p style="font-family:'JetBrainsMono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:10px;">June 4, 2026</p>
-        <p style="font-family:'JetBrainsMono',monospace;font-size:clamp(10px,2.8vw,13px);line-height:1.4;color:rgba(255,255,255,0.45);font-weight:300;text-align:center;padding:0 10% 120vw;letter-spacing:0.01em;">Our office has a fan favourite printer: the A1 mini. This has been a critical tool for GamiFries, Sampaguita and more. Think of it as a way to help clients visual ideas. An image on a slide can feel expensive and out of reach. Holding a prototype in your hands, and knowing BBH can make it in-house, feel accessible.</p>
+        <p style="font-family:'JetBrainsMono',monospace;font-size:clamp(10px,2.8vw,13px);line-height:1.4;color:rgba(255,255,255,0.45);font-weight:300;text-align:center;padding:0 10%;letter-spacing:0.01em;">Our office has a fan favourite printer: the A1 mini. This has been a critical tool for GamiFries, Sampaguita and more. Think of it as a way to help clients visual ideas. An image on a slide can feel expensive and out of reach. Holding a prototype in your hands, and knowing BBH can make it in-house, feel accessible.</p>
+        <a href="https://docs.google.com/presentation/d/1E7Ust8Q6GnXomiNTY9IbaKueJURoSpczi6jxkfeAJ7A/edit?usp=sharing" target="_blank" rel="noopener" style="display:inline-block;margin-top:24px;margin-bottom:120vw;font-family:'JetBrainsMono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#000;background:#C8B400;padding:14px 28px;text-decoration:none;border-radius:2px;">Join the Class</a>
       </div>
     </div>
   </div>
@@ -119,12 +119,7 @@ function goTo(idx){
   if(cur!==2) pMake.scrollTop=0;
 }
 
-function updateP1(p){
-  bg1.style.transform='scale('+(1+p*0.85)+') translateY('+(p*18)+'%)';
-  var f=Math.max(0,Math.min(1,(p-0.3)/0.25));
-  p1a.style.opacity=1-f;
-  p1b.style.opacity=f;
-}
+function updateP1(p){ /* simplified: no zoom on panel 1 */ }
 
 arrL.addEventListener('click',function(){ goTo(cur-1); });
 arrR.addEventListener('click',function(){ goTo(cur+1); });
@@ -138,12 +133,7 @@ document.addEventListener('touchmove',function(e){
   var dx=e.touches[0].clientX-tx, dy=e.touches[0].clientY-ty;
   if(!tdir&&Math.max(Math.abs(dx),Math.abs(dy))>10) tdir=Math.abs(dx)>Math.abs(dy)?'h':'v';
   if((cur===1||cur===2)&&tdir==='v') return;
-  if(tdir==='v'&&cur===0){
-    e.preventDefault();
-    vp=Math.max(0,Math.min(1,vp+(tly-e.touches[0].clientY)/(window.innerHeight*0.4)));
-    updateP1(vp);
-    tly=e.touches[0].clientY;
-  }
+  
 },{passive:false});
 document.addEventListener('touchend',function(e){
   if(tdir==='h'){
@@ -156,7 +146,7 @@ document.addEventListener('touchend',function(e){
 window.addEventListener('wheel',function(e){
   e.preventDefault();
   if(Math.abs(e.deltaX)>Math.abs(e.deltaY)&&Math.abs(e.deltaX)>30){ goTo(e.deltaX>0?cur+1:cur-1); }
-  else if(cur===0){ vp=Math.max(0,Math.min(1,vp+e.deltaY/(window.innerHeight*0.4))); updateP1(vp); }
+  
   else if(cur===1){ pKnow.scrollTop+=e.deltaY; }
   else if(cur===2){ pMake.scrollTop+=e.deltaY; }
 },{passive:false});
